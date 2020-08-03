@@ -4,7 +4,7 @@
   "description": "An extentions allows you to hide the feed and What's Happening panel on Twitter so you can focus and control your experience!!",
   "content-scripts": [
     {
-    "matches": ["*://*.linkedin.com/*"],
+    "matches": ["*://*.twitter.com/*"],
      "js": ["hide-feed-panel.js"]
     }
   ],
