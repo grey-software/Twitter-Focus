@@ -1,10 +1,10 @@
 {
   "name": "Twitter Focus",
-  "version": "1.0",
+  "version": "0.0.1",
   "description": "An extentions allows you to hide the feed and What's Happening panel on Twitter so you can focus and control your experience!!",
   "content-scripts": [
     {
-    "matches": "<all_urls>",
+    "matches": ["*://*.linkedin.com/*"],
      "js": ["hide-feed-panel.js"]
     }
   ],
