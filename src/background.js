@@ -1,15 +1,10 @@
 
-var focus = true;
+var focus = false;
 var port;
 chrome.runtime.onConnect.addListener(function(connectionPort){
     console.log("I am connected");
     console.assert(connectionPort.name == "TwitterFocus"); 
     port = connectionPort;
-    if (focus)
-      console.log("I am here");
-      port.postMessage({status: "focus"});
-
-    focus = !focus;
 });
 
 chrome.browserAction.onClicked.addListener(function(){
@@ -17,7 +12,6 @@ chrome.browserAction.onClicked.addListener(function(){
       port.postMessage({status: "focus"});
     else
       port.postMessage({status: "un-focus"});
-    
     focus = !focus;
 });
 
