@@ -7,10 +7,12 @@ var port = chrome.runtime.connect({name: "TwitterFocus"});
 
 port.onMessage.addListener(function(msg) {     
     if(msg.status == "focus")
-        setContentVisibility(false)
+        blockFeedPanel()
     else
         setContentVisibility(true);
+
 });
+
 
 
 
@@ -19,10 +21,40 @@ function setContentVisibility(makeVisible){
         document.getElementsByClassName(panelClassName)[0].style.visibility = "visible";
         document.getElementsByClassName(feedClassName)[1].style.visibility = "visible";
     }else{
-        
         document.getElementsByClassName(panelClassName)[0].style.visibility = "hidden"
         document.getElementsByClassName(feedClassName)[1].style.visibility  = "hidden";
     }
+}
+
+var intervalId;
+
+function blockFeedPanel(){
+    function tryBlockingFeedPanel(){
+        if(!isBlocked())
+            setContentVisibility(false)
+            clearInterval(intervalId)
+        
+        return
+    }
+
+    if(!hasLoaded())  
+        intervalId = setInterval(tryBlockingFeedPanel, 1000)
+    else
+        setContentVisibility(false)
+
+
+}
+
+
+function isBlocked(){
+    if(!hasLoaded())
+        return false
+    else 
+        return document.getElementsByClassName(panelClassName)[0].style.visibility == "hidden" && document.getElementsByClassName(feedClassName)[1].style.visibility  == "hidden"
+}
+
+function hasLoaded(){
+    return document.getElementsByClassName(panelClassName)[0] && document.getElementsByClassName(feedClassName)[1]
 }
 
 
