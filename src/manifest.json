@@ -14,7 +14,7 @@
     {
      "run_at": "document_end",
      "matches": ["*://*.twitter.com/*"],
-     "js": ["hide-feed-panel.js"]
+     "js": ["hide-feed-panel.js", "quotes.js"]
     }
   ]
 }
