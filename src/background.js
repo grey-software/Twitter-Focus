@@ -12,9 +12,9 @@ chrome.runtime.onConnect.addListener(function(connectionPort){
 
 chrome.browserAction.onClicked.addListener(function(){
     if (!focus){
-      port.postMessage({status: "focus"});
+      port.postMessage({ status: "focus"});
     }else{
-      port.postMessage({status: "un-focus"});
+      port.postMessage({ status: "un-focus"});
     }
     focus = !focus;
 });

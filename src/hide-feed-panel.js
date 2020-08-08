@@ -7,9 +7,9 @@ const port = chrome.runtime.connect({name: "TwitterFocus"});
 
 
 port.onMessage.addListener(function(msg) {     
-    if(msg.status == "focus"){
+    if(msg.status === "focus"){
         blockFeedPanel()
-    }else{
+    }else if(msg.status === "un-focus"){
         setContentVisibility(true);
     }    
 });
@@ -63,23 +63,6 @@ function fillQuote(){
 
     const quoteHtmlNode = document.createElement("div")
     quoteHtmlNode.innerHTML = linkedInFocusHTML
-
-    // // HTML for side panel
-    // var sidePanelHTML = "<div style=\"padding:15px;\">"
-    // sidePanelHTML += "<h2 " + gspanelTitleStyle + ">Grey Software Initiatives</h2>"
-    // sidePanelHTML += "<div style=\"display:flex;\">"
-    // sidePanelHTML += "<div style=\"flex:50%;\">"
-    // sidePanelHTML += "<center><img src=\"" + tooninlogoUrl + "\" style=\"width:40%;\"/></center>"
-    // sidePanelHTML += "<p style=\"text-align:center;width=40%;\"><a href=\"https://github.com/grey-software/toonin\">Toonin</a></p>"
-    // sidePanelHTML += "</div>"
-    // sidePanelHTML += "<div style=\"flex:50%;\">"
-    // sidePanelHTML += "<center><img src=\"" + matmathlogoUrl + "\" style=\"width:40%;\"/></center>"
-    // sidePanelHTML += "<p style=\"text-align:center;width=40%;\"><a href=\"https://github.com/grey-software/Material-Math\">Material Math</a></p>"
-    // sidePanelHTML += "</div>"
-    // sidePanelHTML += hyperlinkStyle
-    // sidePanelHTML += "</div>"
-    // // Change the HTML of the side panel
-    // document.getElementsByClassName('artdeco-card ember-view')[4].innerHTML = sidePanelHTML
 
     document.getElementsByClassName(feedClassName)[1].prepend(quoteHtmlNode)
     document.getElementsByClassName(feedClassName)[1].style.fontFamily = "Arial, Helvetica";
