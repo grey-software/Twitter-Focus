@@ -5,6 +5,7 @@ const port = chrome.runtime.connect({ name: "TwitterFocus" });
 
 port.onMessage.addListener(function (msg) {
     if (msg.status === "focus") {
+        console.log("I am about to focus");
         blockFeedPanel()
     } else if (msg.status === "un-focus") {
         setContentVisibility(true);
@@ -43,7 +44,6 @@ function blockFeedPanel () {
 
 function fillQuote () {
     var quote = quotes[Math.floor(Math.random() * quotes.length)];
-    // document.getElementsByClassName()[0].style.visibility = 'visible'
 
     const quoteStyle = "style=\"color:#293E4A;font-size:24px;\margin-bottom:4px;\""
     const lfTitleStyle = "style=\"color:#0477B5;font-size:32px;font-weight:700;margin-bottom:16px;\""
@@ -60,8 +60,8 @@ function fillQuote () {
     const quoteHtmlNode = document.createElement("div")
     quoteHtmlNode.innerHTML = linkedInFocusHTML
 
-    document.getElementsByClassName(feedClassName)[1].prepend(quoteHtmlNode)
-    document.getElementsByClassName(feedClassName)[1].style.fontFamily = "Arial, Helvetica";
+    document.getElementsByClassName("css-1dbjc4n r-e84r5y r-1or9b2r")[1].prepend(quoteHtmlNode)
+    document.getElementsByClassName("css-1dbjc4n r-e84r5y r-1or9b2r")[1].style.fontFamily = "Arial, Helvetica";
 
 }
 function isBlocked () {
@@ -73,7 +73,7 @@ function isBlocked () {
     }
 }
 function hasLoaded(){
-    return document.getElementsByClassName("css-1dbjc4n r-my5ep6 r-qklmqi r-1adg3ll");
+    return document.getElementsByClassName(panelClassName)[0] &&  document.getElementsByClassName(feedClassName);
 }
 
 
