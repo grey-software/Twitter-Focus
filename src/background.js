@@ -1,5 +1,5 @@
 
-var focus = true;
+var focus = false;
 var port;
 chrome.runtime.onConnect.addListener(function (connectionPort) {
   console.log("I am connected");

@@ -18,7 +18,9 @@ function setContentVisibility (makeVisible) {
         document.getElementsByClassName(feedClassName)[1].style.visibility = "visible";
     } else {
         document.getElementsByClassName(panelClassName)[0].style.visibility = "hidden";
-        document.getElementsByClassName(feedClassName)[1].style.visibility = "hidden";
+        // document.getElementsByClassName(feedClassName)[1].style.visibility = "hidden";
+        document.querySelector('[aria-label="Timeline: Your Home Timeline"]').style.visibility = "hidden"
+        fillQuote();
     }
 }
 
@@ -33,10 +35,10 @@ function blockFeedPanel () {
         return
     }
 
-    if (!hasLoaded()) {
-        intervalId = setInterval(tryBlockingFeedPanel, 1000)
-    } else {
+    if (hasLoaded()) {
         setContentVisibility(false)
+    } else {
+        intervalId = setInterval(tryBlockingFeedPanel, 1000)
     }
 
 }
@@ -45,12 +47,12 @@ function fillQuote () {
     var quote = quotes[Math.floor(Math.random() * quotes.length)];
 
     const quoteStyle = "style=\"color:#293E4A;font-size:24px;\margin-bottom:4px;\""
-    const lfTitleStyle = "style=\"color:#0477B5;font-size:32px;font-weight:700;margin-bottom:16px;\""
+    const tfTitleStyle = "style=\"color:#1DA1F2;font-size:32px;font-weight:700;margin-bottom:16px;\""
     const quoteSourceStyle = "style=\"color:#293E4A;font-size:20px;font-style:italic;margin-bottom:16px;\""
     const instructionStyle = "style=\"color:#293E4A;font-size:16px;\margin-bottom:4px;\""
     const instruction = "To exit focus mode, click on the Twitter Focus extension:"
 
-    var linkedInFocusHTML = "<h1 " + lfTitleStyle + ">Twitter Focus</h1>"
+    var linkedInFocusHTML = "<h1 " + tfTitleStyle + ">Twitter Focus</h1>"
     linkedInFocusHTML += "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\"></link>"
     linkedInFocusHTML += "<p " + quoteStyle + ">" + quote.text + "</p>"
     linkedInFocusHTML += "<p " + quoteSourceStyle + ">- " + quote.source + "</p>"
@@ -59,20 +61,20 @@ function fillQuote () {
     const quoteHtmlNode = document.createElement("div")
     quoteHtmlNode.innerHTML = linkedInFocusHTML
 
-    document.getElementsByClassName("css-1dbjc4n r-e84r5y r-1or9b2r")[1].append(quoteHtmlNode)
-    document.getElementsByClassName("css-1dbjc4n r-e84r5y r-1or9b2r")[1].style.fontFamily = "Arial, Helvetica";
+    document.getElementsByClassName(feedClassName)[1].prepend(quoteHtmlNode)
+    document.getElementsByClassName(feedClassName)[1].style.fontFamily = "Arial, Helvetica";
 
 }
 function isBlocked () {
     if (!hasLoaded()) {
         return false
     } else {
-        return document.getElementsByClassName(panelClassName)[0].style.visibility == "hidden" && document.getElementsByClassName(feedClassName)[1].style.visibility == "hidden"
+        return document.getElementsByClassName(panelClassName)[0].style.visibility == "hidden"
 
     }
 }
 function hasLoaded(){
-    return document.getElementsByClassName(panelClassName)[0] &&  document.getElementsByClassName(feedClassName);
+    return document.getElementsByClassName(panelClassName)[0] &&  document.getElementsByClassName(feedClassName)[1];
 }
 
 
