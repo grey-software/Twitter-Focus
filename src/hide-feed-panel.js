@@ -5,7 +5,6 @@ const port = chrome.runtime.connect({ name: "TwitterFocus" });
 
 port.onMessage.addListener(function (msg) {
     if (msg.status === "focus") {
-        console.log("I am about to focus");
         blockFeedPanel()
     } else if (msg.status === "un-focus") {
         setContentVisibility(true);
@@ -60,7 +59,7 @@ function fillQuote () {
     const quoteHtmlNode = document.createElement("div")
     quoteHtmlNode.innerHTML = linkedInFocusHTML
 
-    document.getElementsByClassName("css-1dbjc4n r-e84r5y r-1or9b2r")[1].prepend(quoteHtmlNode)
+    document.getElementsByClassName("css-1dbjc4n r-e84r5y r-1or9b2r")[1].append(quoteHtmlNode)
     document.getElementsByClassName("css-1dbjc4n r-e84r5y r-1or9b2r")[1].style.fontFamily = "Arial, Helvetica";
 
 }
