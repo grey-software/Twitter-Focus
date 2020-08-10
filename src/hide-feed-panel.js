@@ -18,8 +18,8 @@ function setContentVisibility (makeVisible) {
         document.getElementsByClassName(feedClassName)[1].style.visibility = "visible";
     } else {
         document.getElementsByClassName(panelClassName)[0].style.visibility = "hidden";
-        // document.getElementsByClassName(feedClassName)[1].style.visibility = "hidden";
-        document.querySelector('[aria-label="Timeline: Your Home Timeline"]').style.visibility = "hidden"
+        document.getElementsByClassName(feedClassName)[1].style.visibility = "hidden";
+        // document.querySelector('[aria-label="Timeline: Your Home Timeline"]').style.visibility = "hidden"
         fillQuote();
     }
 }
@@ -40,7 +40,6 @@ function blockFeedPanel () {
     } else {
         intervalId = setInterval(tryBlockingFeedPanel, 1000)
     }
-
 }
 
 function fillQuote () {
@@ -73,8 +72,8 @@ function isBlocked () {
 
     }
 }
-function hasLoaded(){
-    return document.getElementsByClassName(panelClassName)[0] &&  document.getElementsByClassName(feedClassName)[1];
+function hasLoaded () {
+    return document.getElementsByClassName(panelClassName)[0] && document.getElementsByClassName(feedClassName)[1];
 }
 
 
