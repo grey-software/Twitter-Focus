@@ -16,8 +16,10 @@ function setContentVisibility (makeVisible) {
     if (makeVisible) {
         document.getElementsByClassName(panelClassName)[0].style.visibility = "visible";
         document.querySelector('[aria-label="Timeline: Your Home Timeline"]').style.visibility = "visible";
+       
         var quote = document.getElementsByClassName("css-1dbjc4n r-1jgb5lz r-1ye8kvj r-13qz1uu")[1].children[0] 
         quote.remove();
+    
     } else {
         document.getElementsByClassName(panelClassName)[0].style.visibility = "hidden";
         document.querySelector('[aria-label="Timeline: Your Home Timeline"]').style.visibility = "hidden"
@@ -46,10 +48,10 @@ function blockFeedPanel () {
 function fillQuote () {
     var quote = quotes[Math.floor(Math.random() * quotes.length)];
 
-    const quoteStyle = "style=\"color:#293E4A;font-size:24px;\margin-bottom:4px;\""
-    const tfTitleStyle = "style=\"color:#1DA1F2;font-size:32px;font-weight:700;margin-bottom:16px;\""
-    const quoteSourceStyle = "style=\"color:#293E4A;font-size:20px;font-style:italic;margin-bottom:16px;\""
-    const instructionStyle = "style=\"color:#293E4A;font-size:16px;\margin-bottom:4px;\""
+    const quoteStyle = "style=\"color:#293E4A;font-size:24px;\margin-bottom:4px;margin-left:20px;\""
+    const tfTitleStyle = "style=\"color:#1DA1F2;font-size:32px;font-weight:700;margin-bottom:16px; margin-left:20px;\""
+    const quoteSourceStyle = "style=\"color:#293E4A;font-size:20px;font-style:italic;margin-bottom:16px;margin-left:20px;\""
+    const instructionStyle = "style=\"color:#293E4A;font-size:16px;\margin-bottom:4px;margin-left:20px;\""
     const instruction = "To exit focus mode, click on the Twitter Focus extension:"
 
     var linkedInFocusHTML = "<h1 " + tfTitleStyle + ">Twitter Focus</h1>"
