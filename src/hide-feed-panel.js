@@ -15,11 +15,12 @@ port.onMessage.addListener(function (msg) {
 function setContentVisibility (makeVisible) {
     if (makeVisible) {
         document.getElementsByClassName(panelClassName)[0].style.visibility = "visible";
-        document.getElementsByClassName(feedClassName)[1].style.visibility = "visible";
+        document.querySelector('[aria-label="Timeline: Your Home Timeline"]').style.visibility = "visible";
+        var quote = document.getElementsByClassName("css-1dbjc4n r-1jgb5lz r-1ye8kvj r-13qz1uu")[1].children[0] 
+        quote.remove();
     } else {
         document.getElementsByClassName(panelClassName)[0].style.visibility = "hidden";
-        document.getElementsByClassName(feedClassName)[1].style.visibility = "hidden";
-        // document.querySelector('[aria-label="Timeline: Your Home Timeline"]').style.visibility = "hidden"
+        document.querySelector('[aria-label="Timeline: Your Home Timeline"]').style.visibility = "hidden"
         fillQuote();
     }
 }
@@ -38,7 +39,7 @@ function blockFeedPanel () {
     if (hasLoaded()) {
         setContentVisibility(false)
     } else {
-        intervalId = setInterval(tryBlockingFeedPanel, 1000)
+        intervalId = setInterval(tryBlockingFeedPanel, 2000)
     }
 }
 
