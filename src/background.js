@@ -1,13 +1,20 @@
-chrome.browserAction.onClicked.addListener(buttonClicked)
+var focus = true;
+var port;
+chrome.runtime.onConnect.addListener(function (connectionPort) {
+    console.assert(connectionPort.name == "TwitterFocus");
+    port = connectionPort;
 
-function buttonClicked(tab){
-  console.log(tab);
-  let msg = {
-    txt: "focus"
-  }
-  chrome.tabs.sendMessage(tab.id, msg)
-}
+    if (focus) {
+        port.postMessage({status: "focus"});
+    }
+});
+
+chrome.browserAction.onClicked.addListener(function(){
+  if (!focus) {
+    port.postMessage({status: "focus"});
+  } else {
+      port.postMessage({status: "unfocus"});
+  } focus = ! focus;
+});
 
 
-
-console.log("running background")
