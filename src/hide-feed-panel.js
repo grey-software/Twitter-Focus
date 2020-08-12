@@ -36,8 +36,6 @@ function hideDistractions (shouldHide, homePage) {
         if(homePage){
             document.querySelector(FEED_LABEL).style.visibility = "hidden"
             fillQuote();
-        }else{
-            document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[0].style.visibility = "hidden";
         }
         document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility = "hidden";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
@@ -46,8 +44,6 @@ function hideDistractions (shouldHide, homePage) {
             document.querySelector(FEED_LABEL).style.visibility = "visible";
             var quote = document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].children[0] 
             quote.remove();
-        }else{
-            document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[0].style.visibility = "visible"
         }
         document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility = "visible";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "visible";
