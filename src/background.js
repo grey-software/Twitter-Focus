@@ -17,11 +17,4 @@ chrome.browserAction.onClicked.addListener(function(){
   } focus = ! focus;
 });
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  if(changeInfo.url == "https://twitter.com/home"){
-    if (focus) {
-      port.postMessage({status: "focus"});
-    }
-  }
-});
 
