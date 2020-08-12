@@ -7,8 +7,16 @@ chrome.runtime.onConnect.addListener(function (connectionPort) {
     if (focus) {
         port.postMessage({status: "focus-home"});
     }
-
 });
+
+chrome.browserAction.onClicked.addListener(function(){
+  if (!focus) {
+    port.postMessage({status: "focus"});
+  } else {
+      port.postMessage({status: "unfocus"});
+  } focus = ! focus;
+});
+
 
 chrome.browserAction.onClicked.addListener(function () {
   if (!focus) {

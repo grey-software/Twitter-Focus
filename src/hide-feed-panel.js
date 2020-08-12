@@ -31,6 +31,7 @@ port.onMessage.addListener(function (msg) {
 });
 
 
+
 function setContentVisibility (makeVisible, homePage) {
     if (makeVisible) {
         if(homePage){
@@ -112,8 +113,6 @@ function fillQuote () {
     document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].prepend(quoteHtmlNode)
     document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].style.fontFamily = "Arial, Helvetica";
 
-
-
 }
 function isBlocked (homePage) {
     if(homePage){
@@ -142,7 +141,7 @@ function hasPanelLoaded(){
 
 function hasFeedLoaded(){
     return document.querySelector(FEED_LABEL);
-}
+
 
 
 
