@@ -21,6 +21,8 @@ port.onMessage.addListener(function (msg) {
 });
 
 
+
+
 function setContentVisibility (makeVisible) {
     if (makeVisible) {
 
@@ -83,8 +85,6 @@ function fillQuote () {
     document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].prepend(quoteHtmlNode)
     document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].style.fontFamily = "Arial, Helvetica";
 
-
-
 }
 function isBlocked () {
     if (!hasLoaded()) {
@@ -95,7 +95,7 @@ function isBlocked () {
     }
 }
 function hasLoaded () {
-    return document.getElementsByClassName(PANEL_CLASS_NAME)[0] && document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1];
+    return document.getElementsByClassName(PANEL_CLASS_NAME)[0] && document.querySelector(FEED_LABEL);
 }
 
 
