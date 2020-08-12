@@ -10,7 +10,7 @@ const tooninLogoUrl = chrome.runtime.getURL("toonin_logo.png")
 const materialMathLogoUrl = chrome.runtime.getURL("material_math_logo.png")
 const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
 
-const port = chrome.runtime.connect({ name: "TwitterFocus" });
+const port = chrome.runtime.connect({ name: "TwitterFocus"});
 
 
 port.onMessage.addListener(function (msg) {
@@ -19,20 +19,29 @@ port.onMessage.addListener(function (msg) {
             blockPanel()  
             break;
         case "unfocus":
-            setContentVisibility(true,false);
+            hideDistractions(false,false);
             break;
         case "focus-home":
-            blockFeedPanel();  
+            blockFeedAndPanel();  
             break;
         case "unfocus-home":
-            setContentVisibility(true,true);
+            hideDistractions(false,true);
             break;
     }
 });
 
 
-function setContentVisibility (makeVisible, homePage) {
-    if (makeVisible) {
+function hideDistractions (shouldHide, homePage) {
+    if (shouldHide) {
+        if(homePage){
+            document.querySelector(FEED_LABEL).style.visibility = "hidden"
+            fillQuote();
+        }else{
+            document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[0].style.visibility = "hidden";
+        }
+        document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility = "hidden";
+        document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
+    } else {
         if(homePage){
             document.querySelector(FEED_LABEL).style.visibility = "visible";
             var quote = document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].children[0] 
@@ -42,47 +51,48 @@ function setContentVisibility (makeVisible, homePage) {
         }
         document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility = "visible";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "visible";
-    } else {
-        if(homePage){
-            document.querySelector(FEED_LABEL).style.visibility = "hidden"
-            fillQuote();
-        }else{
-            document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[0].style.visibility = "hidden";
-        }
-        document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility = "hidden";
-        document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
     }
 }
 
 
 var intervalId;
 
-function blockFeedPanel () {
-    function tryBlockingFeedPanel () {
-        if (!isBlocked(true)) {
-            setContentVisibility(false,true)
-            clearInterval(intervalId)
+function tryBlockingFeedPanel () {
+    if (distractionsHidden(true)) {
+        clearInterval(intervalId)
+    }else{
+        try{
+            hideDistractions(true,true);
+        }catch(err){
+            console.log("Feed hasn't been loaded yet");
         }
-        return
-    }
-    if (hasHomePageLoaded()) {
-        setContentVisibility(false,true)
-    } else {
-        intervalId = setInterval(tryBlockingFeedPanel, 3000)
+        
     }
 }
 
+function blockFeedAndPanel () {
+    if (hasHomePageLoaded()) {
+        hideDistractions(true,true)
+    } else {
+        intervalId = setInterval(tryBlockingFeedPanel, 343)
+    }    
+}
+
+function tryBlockingPanel () {
+    if (distractionsHidden(false)) {
+        clearInterval(intervalId)
+    }else{
+        try{
+            hideDistractions(true,false);
+        }catch(err){
+            console.log("Feed hasn't been loaded yet");
+        }
+    }
+}
 
 function blockPanel () {
-    function tryBlockingPanel () {
-        if (!isBlocked()) {
-            setContentVisibility(false,false)
-            clearInterval(intervalId)
-        }
-        return
-    }
     if (hasPanelLoaded()) {
-        setContentVisibility(false,false)
+        hideDistractions(true,false)
     } else {
         intervalId = setInterval(tryBlockingPanel, 1000)
     }
@@ -115,8 +125,8 @@ function fillQuote () {
 
 
 }
-function isBlocked (homePage) {
-    if(homePage){
+function distractionsHidden (isHomePage) {
+    if(isHomePage){
         if (!hasHomePageLoaded()) {
             return false
         } else {

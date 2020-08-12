@@ -3,9 +3,10 @@ var port;
 var focus = true;
 chrome.runtime.onConnect.addListener(function (connectionPort) {
     console.assert(connectionPort.name == "TwitterFocus");
+    // var url = connectionPort.url
     port = connectionPort;
     if (focus) {
-        port.postMessage({status: "focus-home"});
+      port.postMessage({status: "focus-home"});
     }
 
 });
@@ -28,7 +29,7 @@ chrome.browserAction.onClicked.addListener(function () {
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   if(changeInfo.url){
-    if(changeInfo.url == "https://twitter.com/home"){
+    if(changeInfo.url.includes("twitter.com/home")){
       if(focus){
         port.postMessage({status: "focus-home"});
       }
