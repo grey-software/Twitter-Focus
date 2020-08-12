@@ -11,6 +11,9 @@
         "default-icon": "icon.png",
         "default_title": "TwitterFocus"
     },
+    "permissions": [
+      "tabs"
+    ],
     "content_scripts": [
         {
             "run_at": "document_end",

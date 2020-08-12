@@ -122,8 +122,6 @@ function fillQuote () {
     document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].prepend(quoteHtmlNode)
     document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].style.fontFamily = "Arial, Helvetica";
 
-
-
 }
 function distractionsHidden (isHomePage) {
     if(isHomePage){
@@ -152,9 +150,5 @@ function hasPanelLoaded(){
 
 function hasFeedLoaded(){
     return document.querySelector(FEED_LABEL);
+
 }
-
-
-
-
-
