@@ -7,7 +7,6 @@ chrome.runtime.onConnect.addListener(function (connectionPort) {
     if (focus) {
         port.postMessage({status: "focus"});
     }
-
 });
 
 chrome.browserAction.onClicked.addListener(function () {
