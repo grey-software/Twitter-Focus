@@ -3,6 +3,7 @@ const FEED_CONTAINER_CLASS_NAME = "css-1dbjc4n r-1jgb5lz r-1ye8kvj r-13qz1uu"
 const FEED_LABEL = '[aria-label="Timeline: Your Home Timeline"]'
 const BOTTOM_LABEL = "css-1dbjc4n r-1niwhzg r-1tlfku8 r-1ylenci r-1phboty r-1yadl64 r-ku1wi2 r-1udh08x"
 
+
 const logoUrl = chrome.runtime.getURL("icon.png")
 const gsLogoUrl = chrome.runtime.getURL("logo.png")
 const tooninLogoUrl = chrome.runtime.getURL("toonin_logo.png")
@@ -13,30 +14,43 @@ const port = chrome.runtime.connect({ name: "TwitterFocus" });
 
 
 port.onMessage.addListener(function (msg) {
-    if (msg.status === "focus") {
-        blockFeedPanel()
-    } else if (msg.status === "unfocus") {
-        setContentVisibility(true);
+    switch(msg.status) {
+        case "focus":
+            blockPanel()  
+            break;
+        case "unfocus":
+            setContentVisibility(true,false);
+            break;
+        case "focus-home":
+            blockFeedPanel();  
+            break;
+        case "unfocus-home":
+            setContentVisibility(true,true);
+            break;
     }
 });
 
 
-function setContentVisibility (makeVisible) {
+function setContentVisibility (makeVisible, homePage) {
     if (makeVisible) {
-
+        if(homePage){
+            document.querySelector(FEED_LABEL).style.visibility = "visible";
+            var quote = document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].children[0] 
+            quote.remove();
+        }else{
+            document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[0].style.visibility = "visible"
+        }
         document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility = "visible";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "visible";
-        document.querySelector(FEED_LABEL).style.visibility = "visible";
-
-        var quote = document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].children[0] 
-        quote.remove();
-
     } else {
-
-        document.querySelector(FEED_LABEL).style.visibility = "hidden"
+        if(homePage){
+            document.querySelector(FEED_LABEL).style.visibility = "hidden"
+            fillQuote();
+        }else{
+            document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[0].style.visibility = "hidden";
+        }
         document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility = "hidden";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
-        fillQuote();
     }
 }
 
@@ -45,17 +59,32 @@ var intervalId;
 
 function blockFeedPanel () {
     function tryBlockingFeedPanel () {
-        if (!isBlocked()) {
-            setContentVisibility(false)
+        if (!isBlocked(true)) {
+            setContentVisibility(false,true)
             clearInterval(intervalId)
         }
         return
     }
-
-    if (hasLoaded()) {
-        setContentVisibility(false)
+    if (hasHomePageLoaded()) {
+        setContentVisibility(false,true)
     } else {
         intervalId = setInterval(tryBlockingFeedPanel, 3000)
+    }
+}
+
+
+function blockPanel () {
+    function tryBlockingPanel () {
+        if (!isBlocked()) {
+            setContentVisibility(false,false)
+            clearInterval(intervalId)
+        }
+        return
+    }
+    if (hasPanelLoaded()) {
+        setContentVisibility(false,false)
+    } else {
+        intervalId = setInterval(tryBlockingPanel, 1000)
     }
 }
 
@@ -86,16 +115,33 @@ function fillQuote () {
 
 
 }
-function isBlocked () {
-    if (!hasLoaded()) {
-        return false
-    } else {
-        return document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility == "hidden"
-
+function isBlocked (homePage) {
+    if(homePage){
+        if (!hasHomePageLoaded()) {
+            return false
+        } else {
+            return document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility == "hidden" && document.querySelector(FEED_LABEL).style.visibility == "hidden";
+        }
+    }else{
+        if (!hasPanelLoaded()) {
+            return false
+        } else {
+            return document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility == "hidden" && document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[0].style.visibility == "hidden";
+        }
     }
 }
-function hasLoaded () {
-    return document.getElementsByClassName(PANEL_CLASS_NAME)[0] && document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1];
+
+
+function hasHomePageLoaded () {
+    return hasPanelLoaded() && hasFeedLoaded();
+}
+
+function hasPanelLoaded(){
+    return document.getElementsByClassName(PANEL_CLASS_NAME)[0]
+}
+
+function hasFeedLoaded(){
+    return document.querySelector(FEED_LABEL);
 }
 
 
