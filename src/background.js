@@ -18,16 +18,18 @@ chrome.browserAction.onClicked.addListener(function () {
     }else{
       port.postMessage({status: "focus"})
     }
-  }else if(currentURL == "https://twitter.com/home"){
-      port.postMessage({status: "unfocus-home"});
   }else{
+    if(currentURL == "https://twitter.com/home"){
+      port.postMessage({status: "unfocus-home"});
+    }else{
       port.postMessage({status: "unfocus"});
+    }
   }
   focus = ! focus;
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  if(changeInfo.url && changeInfo.url.includes("twitter.com") && !changeInfo.url.includes("/explore")){
+  if(changeInfo.url && changeInfo.url.includes("twitter.com") && !changeInfo.url.includes("/explore") &&!changeInfo.url.includes("/messages")){
     if(changeInfo.url.includes("twitter.com/home")){
       if(focus){
         port.postMessage({status: "focus-home"});
