@@ -1,4 +1,4 @@
-const PANEL_CLASS_NAME = "css-1dbjc4n r-1u4rsef r-9cbz99 r-1ylenci r-1phboty r-rs99b7 r-ku1wi2 r-1udh08x"
+const PANEL_CLASS_NAME = '[aria-label="Timeline: Trending now"]'
 const FEED_CONTAINER_CLASS_NAME = "css-1dbjc4n r-1jgb5lz r-1ye8kvj r-13qz1uu"
 const FEED_LABEL = '[aria-label="Timeline: Your Home Timeline"]'
 const BOTTOM_LABEL = "css-1dbjc4n r-1niwhzg r-1tlfku8 r-1ylenci r-1phboty r-1yadl64 r-ku1wi2 r-1udh08x"
@@ -10,91 +10,96 @@ const tooninLogoUrl = chrome.runtime.getURL("toonin_logo.png")
 const materialMathLogoUrl = chrome.runtime.getURL("material_math_logo.png")
 const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
 
-const port = chrome.runtime.connect({ name: "TwitterFocus"});
+const port = chrome.runtime.connect({ name: "TwitterFocus" });
 
+var quoteFilled = false;
 
 port.onMessage.addListener(function (msg) {
-    switch(msg.status) {
+    switch (msg.status) {
         case "focus":
-            blockPanel()  
+            blockPanel()
+            quoteFilled = false;
             break;
         case "unfocus":
-            hideDistractions(false,false);
+            hideDistractions(false, false);
+            quoteFilled = false;
             break;
         case "focus-home":
-            blockFeedAndPanel();  
+            blockFeedAndPanel();
             break;
         case "unfocus-home":
-            hideDistractions(false,true);
+            hideDistractions(false, true);
             break;
     }
 });
 
 
-function hideDistractions (shouldHide, homePage) {
+function hideDistractions(shouldHide, homePage) {
     if (shouldHide) {
-        if(homePage){
+        if (homePage) {
             document.querySelector(FEED_LABEL).style.visibility = "hidden"
             fillQuote();
         }
-        document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility = "hidden";
+        document.querySelector(PANEL_CLASS_NAME).style.visibility = "hidden";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
     } else {
-        if(homePage){
+        if (homePage) {
             document.querySelector(FEED_LABEL).style.visibility = "visible";
-            var quote = document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].children[0] 
+            var quote = document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].children[0]
             quote.remove();
         }
-        document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility = "visible";
+        document.querySelector(PANEL_CLASS_NAME).style.visibility = "visible";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "visible";
     }
 }
 
 
 var intervalId;
-
-function tryBlockingFeedPanel () {
+var tryHideDistractions = true
+function tryBlockingFeedPanel() {
     if (distractionsHidden(true)) {
         clearInterval(intervalId)
-    }else{
-        try{
-            hideDistractions(true,true);
-        }catch(err){
+    } else {
+        try {
+            if (!quoteFilled) {
+                hideDistractions(true, true);
+            }
+        } catch (err) {
             console.log("Feed hasn't been loaded yet");
         }
-        
+
     }
 }
 
-function blockFeedAndPanel () {
-    if (hasHomePageLoaded()) {
-        hideDistractions(true,true)
+function blockFeedAndPanel() {
+    if (homePageHasLoaded()) {
+        hideDistractions(true, true)
     } else {
-        intervalId = setInterval(tryBlockingFeedPanel, 100)
-    }    
+        intervalId = setInterval(tryBlockingFeedPanel, 500)
+    }
 }
 
-function tryBlockingPanel () {
+function tryBlockingPanel() {
     if (distractionsHidden(false)) {
         clearInterval(intervalId)
-    }else{
-        try{
-            hideDistractions(true,false);
-        }catch(err){
+    } else {
+        try {
+            hideDistractions(true, false);
+        } catch (err) {
             console.log("Feed hasn't been loaded yet");
         }
     }
 }
 
-function blockPanel () {
-    if (hasPanelLoaded()) {
-        hideDistractions(true,false)
+function blockPanel() {
+    if (panelHasLoaded()) {
+        hideDistractions(true, false)
     } else {
         intervalId = setInterval(tryBlockingPanel, 100)
     }
 }
 
-function fillQuote () {
+function fillQuote() {
     var quote = quotes[Math.floor(Math.random() * quotes.length)];
 
     const quoteStyle = "style=\"color:#293E4A;font-size:20px;\margin-bottom:4px;margin-left:10px;\""
@@ -114,37 +119,36 @@ function fillQuote () {
     const quoteHtmlNode = document.createElement("div")
     quoteHtmlNode.innerHTML = linkedInFocusHTML
 
-    
+
     document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].prepend(quoteHtmlNode)
     document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].style.fontFamily = "Arial, Helvetica";
+    quoteFilled = true;
 
 }
-function distractionsHidden (isHomePage) {
-    if(isHomePage){
-        if (!hasHomePageLoaded()) {
-            return false
-        } else {
-            return document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility == "hidden" && document.querySelector(FEED_LABEL).style.visibility == "hidden";
+function distractionsHidden(isHomePage) {
+    if (isHomePage) {
+        if (homePageHasLoaded()) {
+            return document.querySelector(PANEL_CLASS_NAME).style.visibility == "hidden" && document.querySelector(FEED_LABEL).style.visibility == "hidden";
         }
-    }else{
-        if (!hasPanelLoaded()) {
-            return false
-        } else {
-            return document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility == "hidden"
-        }
+        return false;
+    } else {
+        if (panelHasLoaded()) {
+            return document.querySelector(PANEL_CLASS_NAME).style.visibility == "hidden"
+        } 
+        return false;
     }
 }
 
 
-function hasHomePageLoaded () {
-    return hasPanelLoaded() && hasFeedLoaded();
+function homePageHasLoaded() {
+    return panelHasLoaded() && feedHasLoaded();
 }
 
-function hasPanelLoaded(){
-    return document.getElementsByClassName(PANEL_CLASS_NAME)[0]
+function panelHasLoaded() {
+    return document.querySelector(PANEL_CLASS_NAME)
 }
 
-function hasFeedLoaded(){
+function feedHasLoaded() {
     return document.querySelector(FEED_LABEL);
 
 }
