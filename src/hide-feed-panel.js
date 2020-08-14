@@ -14,6 +14,9 @@ const port = chrome.runtime.connect({ name: "TwitterFocus" });
 
 var quoteFilled = false;
 
+var initialLoad = true;
+
+
 port.onMessage.addListener(function (msg) {
     switch (msg.status) {
         case "focus":
@@ -28,6 +31,9 @@ port.onMessage.addListener(function (msg) {
         case "unfocus-home":
             hideDistractions(false, true);
             break;
+        case "messages-explore":
+            quoteFilled = false;
+            break;    
     }
 });
 
@@ -74,7 +80,12 @@ function blockFeedAndPanel() {
     if (homePageHasLoaded()) {
         hideDistractions(true, true)
     } else {
-        intervalId = setInterval(tryBlockingFeedPanel, 750)
+        if(initialLoad){
+            intervalId = setInterval(tryBlockingFeedPanel, 1000)
+            initialLoad =  false;
+        }else{
+            intervalId = setInterval(tryBlockingFeedPanel, 100)
+        }
     }
 }
 
