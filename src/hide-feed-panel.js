@@ -70,7 +70,7 @@ function blockFeedAndPanel () {
     if (hasHomePageLoaded()) {
         hideDistractions(true,true)
     } else {
-        intervalId = setInterval(tryBlockingFeedPanel, 343)
+        intervalId = setInterval(tryBlockingFeedPanel, 100)
     }    
 }
 
@@ -90,7 +90,7 @@ function blockPanel () {
     if (hasPanelLoaded()) {
         hideDistractions(true,false)
     } else {
-        intervalId = setInterval(tryBlockingPanel, 1000)
+        intervalId = setInterval(tryBlockingPanel, 100)
     }
 }
 
@@ -130,7 +130,7 @@ function distractionsHidden (isHomePage) {
         if (!hasPanelLoaded()) {
             return false
         } else {
-            return document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility == "hidden" && document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[0].style.visibility == "hidden";
+            return document.getElementsByClassName(PANEL_CLASS_NAME)[0].style.visibility == "hidden"
         }
     }
 }

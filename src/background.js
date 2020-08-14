@@ -3,20 +3,12 @@ var port;
 var focus = true;
 chrome.runtime.onConnect.addListener(function (connectionPort) {
     console.assert(connectionPort.name == "TwitterFocus");
-    // var url = connectionPort.url
     port = connectionPort;
     if (focus) {
       port.postMessage({status: "focus-home"});
     }
 });
 
-chrome.browserAction.onClicked.addListener(function(){
-  if (!focus) {
-    port.postMessage({status: "focus"});
-  } else {
-      port.postMessage({status: "unfocus"});
-  } focus = ! focus;
-});
 
 
 chrome.browserAction.onClicked.addListener(function () {
@@ -31,12 +23,11 @@ chrome.browserAction.onClicked.addListener(function () {
   }else{
       port.postMessage({status: "unfocus"});
   }
-
   focus = ! focus;
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  if(changeInfo.url){
+  if(changeInfo.url && changeInfo.url.includes("twitter.com") && !changeInfo.url.includes("/explore")){
     if(changeInfo.url.includes("twitter.com/home")){
       if(focus){
         port.postMessage({status: "focus-home"});
@@ -44,7 +35,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     }else if(focus){
       port.postMessage({status: "focus"});
     }
-
     currentURL = changeInfo.url
 
   }
