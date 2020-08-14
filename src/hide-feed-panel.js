@@ -11,6 +11,8 @@ const materialMathLogoUrl = chrome.runtime.getURL("material_math_logo.png")
 const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
 
 const port = chrome.runtime.connect({ name: "TwitterFocus" });
+console.log(window.location.toString());
+port.postMessage({url:  window.location.toString()});
 
 var quoteFilled = false;
 
