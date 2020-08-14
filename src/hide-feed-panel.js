@@ -18,11 +18,9 @@ port.onMessage.addListener(function (msg) {
     switch (msg.status) {
         case "focus":
             blockPanel()
-            quoteFilled = false;
             break;
         case "unfocus":
             hideDistractions(false, false);
-            quoteFilled = false;
             break;
         case "focus-home":
             blockFeedAndPanel();
@@ -50,6 +48,7 @@ function hideDistractions(shouldHide, homePage) {
         }
         document.querySelector(PANEL_CLASS_NAME).style.visibility = "visible";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "visible";
+        quoteFilled = false;
     }
 }
 
@@ -75,7 +74,7 @@ function blockFeedAndPanel() {
     if (homePageHasLoaded()) {
         hideDistractions(true, true)
     } else {
-        intervalId = setInterval(tryBlockingFeedPanel, 500)
+        intervalId = setInterval(tryBlockingFeedPanel, 750)
     }
 }
 
@@ -85,6 +84,7 @@ function tryBlockingPanel() {
     } else {
         try {
             hideDistractions(true, false);
+            quoteFilled = false;
         } catch (err) {
             console.log("Feed hasn't been loaded yet");
         }
