@@ -2,7 +2,7 @@
     "name": "Twitter Focus",
     "manifest_version": 2,
     "version": "0.0.1",
-    "description": "An extention that allows you to hide the feed and What's Happening panel on Twitter so you can focus and control your experience!!",
+    "description": "A web extension that allows you to hide the feed and What's Happening panel on Twitter so you can focus and control your experience!",
     "background": {
         "scripts": ["background.js"],
         "persistent": true
