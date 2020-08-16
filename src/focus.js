@@ -6,8 +6,6 @@ const BOTTOM_LABEL = "css-1dbjc4n r-1niwhzg r-1tlfku8 r-1ylenci r-1phboty r-1yad
 
 const logoUrl = chrome.runtime.getURL("icon.png")
 const gsLogoUrl = chrome.runtime.getURL("logo.png")
-const tooninLogoUrl = chrome.runtime.getURL("toonin_logo.png")
-const materialMathLogoUrl = chrome.runtime.getURL("material_math_logo.png")
 const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
 
 const port = chrome.runtime.connect({ name: "TwitterFocus" });
