@@ -21,5 +21,5 @@
             "js": ["focus.js", "quotes.js"]
         }
     ],
-    "web_accessible_resources": ["icon.png", "logo.png", "toonin_logo.png", "material_math_logo.png", "paypal.png"]
+    "web_accessible_resources": ["icon.png", "logo.png", "toonin_logo.png", "material_math_logo.png", "paypal.png", "github-square-brands.svg", "linkedin-brands.svg"]
 }

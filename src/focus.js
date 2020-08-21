@@ -2,10 +2,12 @@ const PANEL_CLASS_NAME = '[aria-label="Timeline: Trending now"]'
 const FEED_CONTAINER_CLASS_NAME = "css-1dbjc4n r-1jgb5lz r-1ye8kvj r-13qz1uu"
 const FEED_LABEL = '[aria-label="Timeline: Your Home Timeline"]'
 const BOTTOM_LABEL = "css-1dbjc4n r-1niwhzg r-1tlfku8 r-1ylenci r-1phboty r-1yadl64 r-ku1wi2 r-1udh08x"
-
+const MAIN_CONTAINER_CLASSNAME = "css-1dbjc4n r-13awgt0 r-12vffkv";
 
 const logoUrl = chrome.runtime.getURL("icon.png")
 const gsLogoUrl = chrome.runtime.getURL("logo.png")
+const linkedInURL = chrome.runtime.getURL("linkedin-brands.svg")
+const githubLogoURL = chrome.runtime.getURL("github-square-brands.svg")
 const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
 
 const port = chrome.runtime.connect({ name: "TwitterFocus" });
@@ -14,6 +16,7 @@ port.postMessage({url:  window.location.toString()});
 var quoteFilled = false;
 
 var initialLoad = true;
+
 
 
 port.onMessage.addListener(function (msg) {
@@ -45,6 +48,12 @@ function hideDistractions(shouldHide, homePage) {
         }
         document.querySelector(PANEL_CLASS_NAME).style.visibility = "hidden";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
+
+        // if(initialLoad){
+        //     setTimeout(() => {
+        //         document.getElementsByClassName(MAIN_CONTAINER_CLASSNAME)[0].style.opacity = "1"
+        //     }, 148)
+        // }
     } else {
         if (homePage) {
             document.querySelector(FEED_LABEL).style.visibility = "visible";
@@ -119,8 +128,8 @@ function fillQuote() {
     const instructionStyle = "style=\"color:#293E4A;font-size:16px;\margin-bottom:4px;margin-left:10px;\""
     const instruction = "To exit focus mode, click on the Twitter Focus extension:"
     const gsTitleStyle = "style=\"color:#434343;font-size:32px;font-weight:700;margin-right:auto;\""
-    const gsGithubStyle = "style=\"height: 32px;width: 32px;font-size: 32px;margin: 0px 6px;\""
-    const gsSocialLinkedInStyle = "style=\"background: #007bb5;color: white;height: 25px;width: 25px;font-size: 24px;margin: 0px 6px;padding: 6px;border-radius:4px;\""
+    const gsGithubStyle = "style=\"height: 40px;width: 30px;font-size: 32px;margin: 0px 10px;\""
+    const gsSocialLinkedInStyle = "style=\"color: white;height: 40px;width: 30px;font-size: 24px;margin: 0px 6px;padding: 6px;border-radius:4px;\""
     const gsDesc = "This web extension was developed by Grey Software. Grey Software is a non-profit organization that aims to create the open source ecosystem of the future where software maintainers mentor students and build free software together!"
     const hyperlinkStyle = "<style>a{text-decoration: none;color: black;} a:visited{text-decoration: none;color: black;} a:hover{text-decoration: none !important;opacity: 0.7;} </style>"
     const paypalButtonStyle = "<style>.paypal-icon{height:24px;margin-right:4px}.paypal-button{border-radius:24px;height:42px;border:1px solid #003084;outline:none;display:flex;align-items:center;padding:2px 16px;color:#003084;font-size:18px;background-color:white;transition:all 0.3s ease-out}.paypal-button:hover{cursor:pointer;border:1px solid #1ba0de}.paypal-button:active{cursor:pointer;border:1px solid #1ba0de;color:white;background-color:#003084}</style>"
@@ -139,8 +148,8 @@ function fillQuote() {
     linkedInFocusHTML += "<div style=\"display: flex; align-items: center;margin-bottom:16px; margin-top: 1px;\">"
     linkedInFocusHTML += "<img src=\"" + gsLogoUrl + "\" style=\"height: 50px;float:left;margin-right: 6px;\" />"
     linkedInFocusHTML += "<span " + gsTitleStyle + ">Grey Software</span>"
-    linkedInFocusHTML += "<a " + gsSocialLinkedInStyle + " href=\"https://www.linkedin.com/company/grey-software/\" class=\"fa fa-linkedin\"></a>"
-    linkedInFocusHTML += "<a " + gsGithubStyle + " href=\"https://github.com/grey-software\" class=\"fa fa-github\"></a>"
+    linkedInFocusHTML += "<a href=\"https://www.linkedin.com/company/grey-software/\" > <img src=\"" + linkedInURL + "\" " + gsSocialLinkedInStyle +"> </a>"
+    linkedInFocusHTML += "<a href=\"https://github.com/grey-software\"> <img src=\"" + githubLogoURL + "\" " + gsGithubStyle + "></a>"
     linkedInFocusHTML += "<a target=\"_blank\" href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VEAGAZP7DHJNE&source=url\"><button class=\"paypal-button\"><img class=\"paypal-icon\" src=\"https://assets.codepen.io/853141/paypal.png\"/>Donate</button></a></div>"
     linkedInFocusHTML += hyperlinkStyle
     linkedInFocusHTML += paypalButtonStyle
@@ -156,6 +165,7 @@ function fillQuote() {
     quoteFilled = true;
 
 }
+
 function distractionsHidden(isHomePage) {
     if (isHomePage) {
         if (homePageHasLoaded()) {
