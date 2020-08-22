@@ -2,10 +2,12 @@ const PANEL_CLASS_NAME = '[aria-label="Timeline: Trending now"]'
 const FEED_CONTAINER_CLASS_NAME = "css-1dbjc4n r-1jgb5lz r-1ye8kvj r-13qz1uu"
 const FEED_LABEL = '[aria-label="Timeline: Your Home Timeline"]'
 const BOTTOM_LABEL = "css-1dbjc4n r-1niwhzg r-1tlfku8 r-1ylenci r-1phboty r-1yadl64 r-ku1wi2 r-1udh08x"
-
+const MAIN_CONTAINER_CLASSNAME = "css-1dbjc4n r-13awgt0 r-12vffkv";
 
 const logoUrl = chrome.runtime.getURL("icon.png")
 const gsLogoUrl = chrome.runtime.getURL("logo.png")
+const linkedInURL = chrome.runtime.getURL("linkedin-brands.svg")
+const githubLogoURL = chrome.runtime.getURL("github-square-brands.svg")
 const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
 const githubLogoUrl = chrome.runtime.getURL("github.svg")
 const linkedinLogoUrl = chrome.runtime.getURL("linkedin.svg")
@@ -16,6 +18,7 @@ port.postMessage({url:  window.location.toString()});
 var quoteFilled = false;
 
 var initialLoad = true;
+
 
 
 port.onMessage.addListener(function (msg) {
@@ -47,6 +50,12 @@ function hideDistractions(shouldHide, homePage) {
         }
         document.querySelector(PANEL_CLASS_NAME).style.visibility = "hidden";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
+
+        // if(initialLoad){
+        //     setTimeout(() => {
+        //         document.getElementsByClassName(MAIN_CONTAINER_CLASSNAME)[0].style.opacity = "1"
+        //     }, 148)
+        // }
     } else {
         if (homePage) {
             document.querySelector(FEED_LABEL).style.visibility = "visible";
@@ -177,6 +186,7 @@ function fillQuote() {
     quoteFilled = true;
 
 }
+
 function distractionsHidden(isHomePage) {
     if (isHomePage) {
         if (homePageHasLoaded()) {
