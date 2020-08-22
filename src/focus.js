@@ -19,21 +19,33 @@ var quoteFilled = false;
 
 var initialLoad = true;
 
+var focus = false; 
+window.addEventListener("resize", hidePanelOnResize);
 
+
+function hidePanelOnResize(){
+    if (focus){
+        tryBlockingPanel();
+    }
+}
 
 port.onMessage.addListener(function (msg) {
     switch (msg.status) {
         case "focus":
             blockPanel()
+            focus = true;
             break;
         case "unfocus":
             hideDistractions(false, false);
+            focus = false;
             break;
         case "focus-home":
             blockFeedAndPanel();
+            focus = true;
             break;
         case "unfocus-home":
             hideDistractions(false, true);
+            focus = false;
             break;
         case "messages-explore":
             quoteFilled = false;
@@ -74,7 +86,6 @@ function tryBlockingFeedPanel() {
                 hideDistractions(true, true);
             }
         } catch (err) {
-            console.log(err)
             console.log("Feed hasn't been loaded yet");
         }
 
