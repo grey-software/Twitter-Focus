@@ -1,5 +1,5 @@
 const PANEL_CLASS_NAME = '[aria-label="Timeline: Trending now"]'
-const FEED_CONTAINER_CLASS_NAME = "css-1dbjc4n r-1jgb5lz r-1ye8kvj r-13qz1uu"
+const FEED_CONTAINER_CLASS_NAME = "section[aria-labelledby^=accessible-list]"
 const FEED_LABEL = '[aria-label="Timeline: Your Home Timeline"]'
 const BOTTOM_LABEL = "css-1dbjc4n r-1niwhzg r-1tlfku8 r-1ylenci r-1phboty r-1yadl64 r-ku1wi2 r-1udh08x"
 const MAIN_CONTAINER_CLASSNAME = "css-1dbjc4n r-13awgt0 r-12vffkv";
@@ -19,21 +19,33 @@ var quoteFilled = false;
 
 var initialLoad = true;
 
+var focus = false; 
+window.addEventListener("resize", hidePanelOnResize);
 
+
+function hidePanelOnResize(){
+    if (focus){
+        tryBlockingPanel();
+    }
+}
 
 port.onMessage.addListener(function (msg) {
     switch (msg.status) {
         case "focus":
             blockPanel()
+            focus = true;
             break;
         case "unfocus":
             hideDistractions(false, false);
+            focus = false;
             break;
         case "focus-home":
             blockFeedAndPanel();
+            focus = true;
             break;
         case "unfocus-home":
             hideDistractions(false, true);
+            focus = false;
             break;
         case "messages-explore":
             quoteFilled = false;
@@ -50,16 +62,10 @@ function hideDistractions(shouldHide, homePage) {
         }
         document.querySelector(PANEL_CLASS_NAME).style.visibility = "hidden";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
-
-        // if(initialLoad){
-        //     setTimeout(() => {
-        //         document.getElementsByClassName(MAIN_CONTAINER_CLASSNAME)[0].style.opacity = "1"
-        //     }, 148)
-        // }
     } else {
         if (homePage) {
             document.querySelector(FEED_LABEL).style.visibility = "visible";
-            var quote = document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].children[0]
+            var quote = document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[0].children[0]
             quote.remove();
         }
         document.querySelector(PANEL_CLASS_NAME).style.visibility = "visible";
@@ -80,7 +86,6 @@ function tryBlockingFeedPanel() {
                 hideDistractions(true, true);
             }
         } catch (err) {
-            console.log(err)
             console.log("Feed hasn't been loaded yet");
         }
 
@@ -181,8 +186,8 @@ function fillQuote() {
     quoteHtmlNode.innerHTML = focusHTML
 
 
-    document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].prepend(quoteHtmlNode)
-    document.getElementsByClassName(FEED_CONTAINER_CLASS_NAME)[1].style.fontFamily = "Arial, Helvetica";
+    document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[0].prepend(quoteHtmlNode)
+    document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[0].style.fontFamily = "Arial, Helvetica";
     quoteFilled = true;
 
 }
