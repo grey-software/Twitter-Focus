@@ -1,3 +1,4 @@
+global.browser = require('webextension-polyfill')
 var currentURL;
 var port;
 var focus = true;
@@ -52,3 +53,4 @@ function sendStatus (url, port) {
     port.postMessage({ status: "messages-explore" });
   }
 }
+

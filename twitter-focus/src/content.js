@@ -4,13 +4,13 @@ const FEED_LABEL = '[aria-label="Timeline: Your Home Timeline"]'
 const BOTTOM_LABEL = "css-1dbjc4n r-1niwhzg r-1tlfku8 r-1ylenci r-1phboty r-1yadl64 r-ku1wi2 r-1udh08x"
 const MAIN_CONTAINER_CLASSNAME = "css-1dbjc4n r-13awgt0 r-12vffkv";
 
-const logoUrl = chrome.runtime.getURL("icon.png")
-const gsLogoUrl = chrome.runtime.getURL("logo.png")
-const linkedInURL = chrome.runtime.getURL("linkedin-brands.svg")
-const githubLogoURL = chrome.runtime.getURL("github-square-brands.svg")
-const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
-const githubLogoUrl = chrome.runtime.getURL("github.svg")
-const linkedinLogoUrl = chrome.runtime.getURL("linkedin.svg")
+const logoUrl = chrome.runtime.getURL("icons/icon.png")
+const gsLogoUrl = chrome.runtime.getURL("icons/logo.png")
+const linkedInURL = chrome.runtime.getURL("icons/linkedin-brands.svg")
+const githubLogoURL = chrome.runtime.getURL("icons/github-square-brands.svg")
+const paypalLogoUrl = chrome.runtime.getURL("icons/paypal.png")
+const githubLogoUrl = chrome.runtime.getURL("icons/github.svg")
+const linkedinLogoUrl = chrome.runtime.getURL("icons/linkedin.svg")
 
 const port = chrome.runtime.connect({ name: "TwitterFocus" });
 port.postMessage({url:  window.location.toString()});
