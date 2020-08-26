@@ -183,7 +183,15 @@ function fillQuote() {
 
 
     const quoteHtmlNode = document.createElement("div")
-    quoteHtmlNode.innerHTML = focusHTML
+
+    const parser = new DOMParser()
+    const parsed = parser.parseFromString(focusHTML, `text/html`)
+    const tags = parsed.getElementsByTagName(`body`)
+
+    quoteHtmlNode.innerHTML = ``
+    for (const tag of tags) {
+        quoteHtmlNode.appendChild(tag)
+    }
 
 
     document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[0].prepend(quoteHtmlNode)
