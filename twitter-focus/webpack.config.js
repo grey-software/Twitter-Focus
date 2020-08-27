@@ -70,6 +70,9 @@ const config = {
     new webpack.DefinePlugin({
       global: 'window',
     }),
+    new ExtensionReloader({
+      manifest: __dirname + '/src/manifest.json',
+    }),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
@@ -101,14 +104,6 @@ if (config.mode === 'production') {
       'process.env': {
         NODE_ENV: '"production"',
       },
-    }),
-  ]);
-}
-
-if (process.env.HMR === 'true') {
-  config.plugins = (config.plugins || []).concat([
-    new ExtensionReloader({
-      manifest: __dirname + '/src/manifest.json',
     }),
   ]);
 }

@@ -36,7 +36,9 @@ port.onMessage.addListener(function (msg) {
             focus = true;
             break;
         case "unfocus":
-            hideDistractions(false, false);
+            // hideDistractions(false, true, false);
+            // displayPanel(true)
+            hideDistractions(false,false);
             focus = false;
             break;
         case "focus-home":
@@ -54,6 +56,23 @@ port.onMessage.addListener(function (msg) {
 });
 
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    // Once we receive a message from the popup
+    if (request.msg) {
+      // If message has the `action` key `print_in_console`
+        if (request.msg.action === "block feed") {
+            displayFeed(false)
+        } else if (request.msg.action === "un-block feed") {
+            displayFeed(true)
+        } else if (request.msg.action === "block panel") {
+            displayPanel(false)
+        } else{
+            displayPanel(true)
+        }
+    }
+  });
+
+
 function hideDistractions(shouldHide, homePage) {
     if (shouldHide) {
         if (homePage) {
@@ -63,7 +82,7 @@ function hideDistractions(shouldHide, homePage) {
         document.querySelector(PANEL_CLASS_NAME).style.visibility = "hidden";
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
     } else {
-        if (homePage) {
+        if (homepage) {
             document.querySelector(FEED_LABEL).style.visibility = "visible";
             var quote = document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[0].children[0]
             quote.remove();
@@ -72,6 +91,31 @@ function hideDistractions(shouldHide, homePage) {
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "visible";
         quoteFilled = false;
     }
+}
+
+function displayPanel(shouldDisplay){
+    if(shouldDisplay){
+        document.querySelector(PANEL_CLASS_NAME).style.visibility = "visible";
+        document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "visible";
+        quoteFilled = false;
+    }else{
+        document.querySelector(PANEL_CLASS_NAME).style.visibility = "hidden";
+        document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
+    }
+
+}
+
+function displayFeed(shouldDisplay){
+    if(shouldDisplay){
+        document.querySelector(FEED_LABEL).style.visibility = "visible";
+        var quote = document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[0].children[0]
+        quote.remove();
+    }else{
+        document.querySelector(FEED_LABEL).style.visibility = "hidden"
+        fillQuote();
+    }
+
+
 }
 
 
