@@ -1,0 +1,41 @@
+{
+  "name": "Twitter Focus",
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "description": "A web extension that allows you to hide the feed and What's Happening panel on Twitter so you can focus and control your experience!",
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "icons/icon.png",
+    "default_title": "TwitterFocus",
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "*://*.twitter.com/*"
+      ],
+      "js": [
+        "content.js",
+        "quotes.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "icons/icon.png",
+    "icons/logo.png",
+    "icons/paypal.png",
+    "icons/github.svg",
+    "icons/linkedin.svg"
+  ],
+  "content_security_policy": "script-src 'self' https://unpkg.com; object-src 'self'"
+}
