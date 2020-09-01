@@ -6,8 +6,6 @@ const MAIN_CONTAINER_CLASSNAME = "css-1dbjc4n r-13awgt0 r-12vffkv";
 
 const logoUrl = chrome.runtime.getURL("icon.png")
 const gsLogoUrl = chrome.runtime.getURL("logo.png")
-const linkedInURL = chrome.runtime.getURL("linkedin-brands.svg")
-const githubLogoURL = chrome.runtime.getURL("github-square-brands.svg")
 const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
 const githubLogoUrl = chrome.runtime.getURL("github.svg")
 const linkedinLogoUrl = chrome.runtime.getURL("linkedin.svg")
@@ -127,18 +125,26 @@ function blockPanel() {
 }
 
 function fillQuote() {
+    var instructionColour = "#293E4A"
+    var gsTextColour = "#000000"
+    if(document.body.style.backgroundColor == "rgb(0, 0, 0)" || document.body.style.backgroundColor == "rgb(21, 32, 43)"){
+        instructionColour = "#FFFFFF"
+        gsTextColour = "#FFFFFF"
+    }
+
     var quote = quotes[Math.floor(Math.random() * quotes.length)];
 
-    const quoteStyle = "style=\"color:#293E4A;font-size:20px;\margin-bottom:4px;\""
+    const quoteStyle = "style=\"color:" + instructionColour + ";font-size:20px;\margin-bottom:4px;\""
     const tfTitleStyle = "style=\"color:#1DA1F2;font-size:28px;font-weight:700;margin-bottom:16px; \""
-    const quoteSourceStyle = "style=\"color:#293E4A;font-size:20px;font-style:italic;margin-bottom:16px;\""
+    const quoteSourceStyle = "style=\"color:"+ instructionColour + ";font-size:20px;font-style:italic;margin-bottom:16px;\""
     const logoStyle = " style=\"height: 24px;margin: 0px 4px;\" "
-    const instructionStyle = "style=\"color:#293E4A;font-size:16px;\margin-bottom:4px;\""
+    const instructionStyle = "style=\"color:"+ instructionColour + ";font-size:16px;\margin-bottom:4px;\""
     const gsTitleStyle = "style=\"color:#434343;font-size:32px;font-weight:700;margin-right:auto;\""
     const gsSocialStyle = "<style>.social-link {height: 32px;margin: 0px 6px;}</style>"
     const hyperlinkStyle = "<style>a{text-decoration: none;color: black;} a:visited{text-decoration: none;color: black;} a:hover{text-decoration: none !important;opacity: 0.7;} </style>"
     const paypalButtonStyle = "<style>.paypal-icon{height:24px;margin-right:4px}.paypal-button{margin-right:24px;border-radius:24px;height:42px;border:1px solid #003084;outline:none;display:flex;align-items:center;padding:2px 16px;color:#003084;font-size:18px;background-color:white;transition:all 0.3s ease-out}.paypal-button:hover{cursor:pointer;border:1px solid #1ba0de}.paypal-button:active{cursor:pointer;border:1px solid #1ba0de;color:white;background-color:#003084}</style>"
     const sponsorButtonStyle = "<style>.btn-github-sponsors {color: #24292e;background-color: #fafbfc;border-color: rgba(27, 31, 35, 0.15) !important;box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04),inset 0 1px 0 hsla(0, 0%, 100%, 0.25);transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);padding: 5px 16px;font-size: 14px;font-weight: 500;line-height: 20px;white-space: nowrap;;cursor: pointer;user-select: none;border: 1px solid;border-radius: 6px;appearance: none;font-family: BlinkMacSystemFont, Segoe UI, Helvetica, Arial; background-color: #f3f4f6;transition-duration: 0.1s;} .icon-github-sponsors {margin-right: 8px;vertical-align: text-bottom;}</style>"
+    const gsDescStyle = "style=\"color:"+ gsTextColour+ "\""
 
     const gsDesc = "This web extension was developed by Grey Software, a not-for-profit open source software development academy where maintainers and students create free software."
     const instruction = "To exit focus mode, click on the LinkedInFocus extension:"
@@ -170,9 +176,9 @@ function fillQuote() {
     focusHTML += "</div>"
     focusHTML += "</div>"
 
-    focusHTML += "<div>" + gsDesc + "</div>"
-    focusHTML += "<div style=\"margin: 12px 0px;\">" + gsDonate + "</div>"
-    focusHTML += "<div style=\"margin-bottom: 12px;\">" + gsThankYou + "</div>"
+    focusHTML += "<div "+ gsDescStyle+ ">" + gsDesc + "</div>"
+    focusHTML += "<div style=\"margin: 12px 0px;color:"+ gsTextColour+"\">" + gsDonate + "</div>"
+    focusHTML += "<div style=\"margin-bottom: 12px;color:"+ gsTextColour+"\">" + gsThankYou + "</div>"
     focusHTML += paypalButtonStyle
     focusHTML += sponsorButtonStyle
     focusHTML += "<div style=\"display:flex;align-items:center\">"
@@ -227,3 +233,4 @@ function feedHasLoaded() {
     return document.querySelector(FEED_LABEL);
 
 }
+

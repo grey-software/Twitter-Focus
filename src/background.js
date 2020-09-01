@@ -46,7 +46,7 @@ function sendStatus (url, port) {
     if (focus) {
       port.postMessage({ status: "focus-home" });
     }
-  } else if (focus && !url.includes("/explore") && !url.includes("/messages")) {
+  } else if (focus && !url.includes("/explore") && !url.includes("/messages") && !url.includes("/i/display")) {
     port.postMessage({ status: "focus" });
   } else {
     port.postMessage({ status: "messages-explore" });
