@@ -1,7 +1,9 @@
 global.browser = require('webextension-polyfill')
 var currentURL;
 var port;
-var focus = true;
+// var focus = true;
+var feedStatus = "Activate Feed"
+var panelStatus = "Activate Panel"
 chrome.runtime.onConnect.addListener(function (connectionPort) {
   console.assert(connectionPort.name == "TwitterFocus");
   port = connectionPort;
@@ -13,25 +15,38 @@ chrome.runtime.onConnect.addListener(function (connectionPort) {
 
 
 
-chrome.browserAction.onClicked.addListener(function () {
-  if ((!currentURL.includes("/explore") && !currentURL.includes("/messages")) && currentURL.includes("twitter.com")) {
-    if (!focus) {
-      if (currentURL == "https://twitter.com/home") {
-        port.postMessage({ status: "focus-home" });
-      } else {
-        port.postMessage({ status: "focus" })
-      }
-    } else {
-      if (currentURL == "https://twitter.com/home") {
-        port.postMessage({ status: "unfocus-home" });
-      } else {
-        port.postMessage({ status: "unfocus" });
-      }
-    }
+// chrome.browserAction.onClicked.addListener(function () {
+//   if ((!currentURL.includes("/explore") && !currentURL.includes("/messages")) && currentURL.includes("twitter.com")) {
+//     if (!focus) {
+//       if (currentURL == "https://twitter.com/home") {
+//         port.postMessage({ status: "focus-home" });
+//       } else {
+//         port.postMessage({ status: "focus" })
+//       }
+//     } else {
+//       if (currentURL == "https://twitter.com/home") {
+//         port.postMessage({ status: "unfocus-home" });
+//       } else {
+//         port.postMessage({ status: "unfocus" });
+//       }
+//     }
 
-    focus = !focus;
-  }
-});
+//     focus = !focus;
+//   }
+// });
+
+// chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+//   if(request.action == "get feed status"){
+//     sendResponse(feedStatus)
+//   }else if(request.action == "get panel status"){
+//     sendResponse(panelStatus)
+//   }else if(request.action == "set feed status"){
+//     this.feedStatus = request.feedStatus
+//   }else{
+//     this.panelStatus = request.panelStatus
+//   }
+// })
+
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.url && changeInfo.url.includes("twitter.com")) {
