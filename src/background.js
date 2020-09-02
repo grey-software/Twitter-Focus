@@ -38,23 +38,6 @@ chrome.browserAction.onClicked.addListener(function () {
   }catch(err){
     console.log("Looks like port or url is not defined")
   }
-  // if ((!currentURL.includes("/explore") && !currentURL.includes("/messages")) && currentURL.includes("twitter.com")) {
-  //   if (!focus) {
-  //     if (currentURL == "https://twitter.com/home") {
-  //       port.postMessage({ status: "focus-home" });
-  //     } else {
-  //       port.postMessage({ status: "focus" })
-  //     }
-  //   } else {
-  //     if (currentURL == "https://twitter.com/home") {
-  //       port.postMessage({ status: "unfocus-home" });
-  //     } else {
-  //       port.postMessage({ status: "unfocus" });
-  //     }
-  //   }
-
-  //   focus = !focus;
-  // }
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
@@ -68,10 +51,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   catch(err){
     console.log("Looks like port or url is not defined");
   }
-  // if (changeInfo.url && changeInfo.url.includes("twitter.com")) {
-  //   sendStatus(changeInfo.url, port);
-  //   currentURL = changeInfo.url
-  // }
 
 });
 
