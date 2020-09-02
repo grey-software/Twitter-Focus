@@ -21,6 +21,8 @@ var focus = false;
 window.addEventListener("resize", hidePanelOnResize);
 
 
+
+
 function hidePanelOnResize(){
     if (focus){
         tryBlockingPanel();
@@ -62,8 +64,9 @@ function hideDistractions(shouldHide, homePage) {
         document.getElementsByClassName(BOTTOM_LABEL)[0].style.visibility = "hidden"
     } else {
         if (homePage) {
+            const childElementIndex = getChildIndexOfFeedContainer();
             document.querySelector(FEED_LABEL).style.visibility = "visible";
-            var quote = document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[0].children[0]
+            var quote = document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[childElementIndex].children[0]
             quote.remove();
         }
         document.querySelector(PANEL_CLASS_NAME).style.visibility = "visible";
@@ -199,9 +202,10 @@ function fillQuote() {
         quoteHtmlNode.appendChild(tag)
     }
 
+    const childElementIndex = getChildIndexOfFeedContainer();
 
-    document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[0].prepend(quoteHtmlNode)
-    document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[0].style.fontFamily = "Arial, Helvetica";
+    document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[childElementIndex].prepend(quoteHtmlNode)
+    document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[childElementIndex].style.fontFamily = "Arial, Helvetica";
     quoteFilled = true;
 
 }
@@ -218,6 +222,17 @@ function distractionsHidden(isHomePage) {
         } 
         return false;
     }
+}
+
+function getChildIndexOfFeedContainer(){
+    var childElementIndex = 0;
+    if(document.querySelectorAll(FEED_CONTAINER_CLASS_NAME)[childElementIndex].innerText.includes("Messages")){
+        childElementIndex = 1
+    }else{
+        childElementIndex = 0
+    }
+
+    return childElementIndex
 }
 
 
