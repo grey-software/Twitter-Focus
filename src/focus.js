@@ -10,6 +10,7 @@ const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
 const linkedinLogoUrl = chrome.runtime.getURL("linkedin.svg")
 
 
+
 const port = chrome.runtime.connect({ name: "TwitterFocus" });
 port.postMessage({url:  window.location.toString()});
 
@@ -130,13 +131,15 @@ function blockPanel() {
 function fillQuote() {
     var instructionColour = "#293E4A"
     var gsTextColour = "#000000"
-    var greyTitleColour = "#434343" 
+    var greyTitleColour = "#434343"
+    
     var githubLogoUrl = chrome.runtime.getURL("github.svg")
+
     if(document.body.style.backgroundColor == "rgb(0, 0, 0)" || document.body.style.backgroundColor == "rgb(21, 32, 43)"){
         instructionColour = "#FFFFFF"
         gsTextColour = "#FFFFFF"
-        var greyTitleColour = "#757575"
-        githubLogoUrl = chrome.runtime.getURL("github-dim.svg")
+        greyTitleColour = "#CCCCCC"
+        githubLogoUrl = chrome.runtime.getURL("github-dim-dark.svg")
     }
 
     var quote = quotes[Math.floor(Math.random() * quotes.length)];
