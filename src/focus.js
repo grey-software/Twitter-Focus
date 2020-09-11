@@ -9,6 +9,14 @@ const gsLogoUrl = chrome.runtime.getURL("logo.png")
 const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
 const linkedinLogoUrl = chrome.runtime.getURL("linkedin.svg")
 
+const GS_TITLE_COLOR_PRIMARY = "#434343"
+const GS_TITLE_COLOR_PRIMARY_DIM_DARK = "#CCCCCC"
+
+const GS_TEXT_COLOR_PRIMARY = "#000000" 
+
+const INSTRCUTION_TEXT_COLOR_PRIMARY =  "#293E4A"
+
+const TEXT_COLOR_DARK = "#FFFFFF"
 
 
 const port = chrome.runtime.connect({ name: "TwitterFocus" });
@@ -129,16 +137,16 @@ function blockPanel() {
 }
 
 function fillQuote() {
-    var instructionColour = "#293E4A"
-    var gsTextColour = "#000000"
-    var greyTitleColour = "#434343"
+    var instructionColour = INSTRCUTION_TEXT_COLOR_PRIMARY
+    var gsTextColour =  GS_TEXT_COLOR_PRIMARY
+    var greyTitleColour = GS_TITLE_COLOR_PRIMARY
     
     var githubLogoUrl = chrome.runtime.getURL("github.svg")
 
     if(document.body.style.backgroundColor == "rgb(0, 0, 0)" || document.body.style.backgroundColor == "rgb(21, 32, 43)"){
-        instructionColour = "#FFFFFF"
-        gsTextColour = "#FFFFFF"
-        greyTitleColour = "#CCCCCC"
+        instructionColour = TEXT_COLOR_DARK
+        gsTextColour = TEXT_COLOR_DARK
+        greyTitleColour = GS_TITLE_COLOR_PRIMARY_DIM_DARK
         githubLogoUrl = chrome.runtime.getURL("github-dim-dark.svg")
     }
 
