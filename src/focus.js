@@ -7,8 +7,17 @@ const MAIN_CONTAINER_CLASSNAME = "css-1dbjc4n r-13awgt0 r-12vffkv";
 const logoUrl = chrome.runtime.getURL("icon.png")
 const gsLogoUrl = chrome.runtime.getURL("logo.png")
 const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
-const githubLogoUrl = chrome.runtime.getURL("github.svg")
 const linkedinLogoUrl = chrome.runtime.getURL("linkedin.svg")
+
+const GS_TITLE_COLOR_PRIMARY = "#434343"
+const GS_TITLE_COLOR_PRIMARY_DIM_DARK = "#CCCCCC"
+
+const GS_TEXT_COLOR_PRIMARY = "#000000" 
+
+const INSTRCUTION_TEXT_COLOR_PRIMARY =  "#293E4A"
+
+const TEXT_COLOR_DARK = "#FFFFFF"
+
 
 const port = chrome.runtime.connect({ name: "TwitterFocus" });
 port.postMessage({url:  window.location.toString()});
@@ -128,11 +137,17 @@ function blockPanel() {
 }
 
 function fillQuote() {
-    var instructionColour = "#293E4A"
-    var gsTextColour = "#000000"
+    var instructionColour = INSTRCUTION_TEXT_COLOR_PRIMARY
+    var gsTextColour =  GS_TEXT_COLOR_PRIMARY
+    var greyTitleColour = GS_TITLE_COLOR_PRIMARY
+    
+    var githubLogoUrl = chrome.runtime.getURL("github.svg")
+
     if(document.body.style.backgroundColor == "rgb(0, 0, 0)" || document.body.style.backgroundColor == "rgb(21, 32, 43)"){
-        instructionColour = "#FFFFFF"
-        gsTextColour = "#FFFFFF"
+        instructionColour = TEXT_COLOR_DARK
+        gsTextColour = TEXT_COLOR_DARK
+        greyTitleColour = GS_TITLE_COLOR_PRIMARY_DIM_DARK
+        githubLogoUrl = chrome.runtime.getURL("github-dim-dark.svg")
     }
 
     var quote = quotes[Math.floor(Math.random() * quotes.length)];
@@ -142,7 +157,7 @@ function fillQuote() {
     const quoteSourceStyle = "style=\"color:"+ instructionColour + ";font-size:20px;font-style:italic;margin-bottom:16px;\""
     const logoStyle = " style=\"height: 24px;margin: 0px 4px;\" "
     const instructionStyle = "style=\"color:"+ instructionColour + ";font-size:16px;\margin-bottom:4px;\""
-    const gsTitleStyle = "style=\"color:#434343;font-size:32px;font-weight:700;margin-right:auto;\""
+    const gsTitleStyle = "style=\"color:"+ greyTitleColour + ";font-size:32px;font-weight:700;margin-right:auto;\""
     const gsSocialStyle = "<style>.social-link {height: 32px;margin: 0px 6px;}</style>"
     const hyperlinkStyle = "<style>a{text-decoration: none;color: black;} a:visited{text-decoration: none;color: black;} a:hover{text-decoration: none !important;opacity: 0.7;} </style>"
     const paypalButtonStyle = "<style>.paypal-icon{height:24px;margin-right:4px}.paypal-button{margin-right:24px;border-radius:24px;height:42px;border:1px solid #003084;outline:none;display:flex;align-items:center;padding:2px 16px;color:#003084;font-size:18px;background-color:white;transition:all 0.3s ease-out}.paypal-button:hover{cursor:pointer;border:1px solid #1ba0de}.paypal-button:active{cursor:pointer;border:1px solid #1ba0de;color:white;background-color:#003084}</style>"
@@ -164,7 +179,7 @@ function fillQuote() {
     focusHTML += "<br>"
     
 
-    focusHTML += "<div style=\"border: 2px;border-style:solid;border-color:#434343;padding: 0.96em;height: 263px;margin-top: 16px;padding-top:20px;border-radius:4px;\">"
+    focusHTML += "<div style=\"border: 2px;border-style:solid;border-color:" + greyTitleColour + ";padding: 0.96em;height: 263px;margin-top: 16px;padding-top:20px;border-radius:4px;\">"
     focusHTML += "<div style=\"display: flex; align-items: center;margin-bottom:16px;justify-content:space-between\">"
 
     focusHTML += "<div style=\"display: flex;align-items:center;\">"
