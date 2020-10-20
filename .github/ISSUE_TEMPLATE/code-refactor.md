@@ -10,7 +10,7 @@ assignees: ''
 ### Motivation 🏁
 
 <!--
-A clear and concise description of the motovation for this refactoring task. 
+A clear and concise description of the motivation for this refactoring task. 
 Are you refactoring code for better readability? 
 Are you restructuring a bloated system into components?
 -->
