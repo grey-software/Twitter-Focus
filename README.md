@@ -1,6 +1,6 @@
-<p align="center">
-  <a href="" title="Twitter Focus"><img width=400 height=400 src="src/icon.png" /></a>
-</p>
+<div align="center">
+  <a href="" title="Twitter Focus"><img width=100 height=100 src="src/icon.png" /></a>
+</div>
 
 # Twitter Focus
 
