@@ -9,7 +9,14 @@ Twitter Focus allows you to hide the feed and What's Happening panel on Twitter 
 # Download
 
 <div align="center">
-  <a href="https://chrome.google.com/webstore/detail/twitter-focus/kmdpomipbibobgdgfeidajmnlecloeml?hl=en&" title="chrome webstore badge"><img width=496 height=150 src="https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_496x150.png" /></a>
+  <a href="https://chrome.google.com/webstore/detail/twitter-focus/kmdpomipbibobgdgfeidajmnlecloeml?hl=en&" title="chrome webstore badge">
+    <img width=198 height=60 src="https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_496x150.png" />
+  </a>
+</div>
+<div align="center">
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/twitter-focus/" title="firefox addons badge">
+    <img width=172 height=60 src="firefox-get-addons.png" />
+  </a>
 </div>
 
 
