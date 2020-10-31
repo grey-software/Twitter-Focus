@@ -7,6 +7,7 @@ const MAIN_CONTAINER_CLASSNAME = "css-1dbjc4n r-13awgt0 r-12vffkv";
 const logoUrl = chrome.runtime.getURL("icon.png")
 const gsLogoUrl = chrome.runtime.getURL("logo.png")
 const paypalLogoUrl = chrome.runtime.getURL("paypal.png")
+const opencollLogoUrl = chrome.runtime.getURL("opencollective.svg")
 const linkedinLogoUrl = chrome.runtime.getURL("linkedin.svg")
 
 const GS_TITLE_COLOR_PRIMARY = "#434343"
@@ -161,12 +162,13 @@ function fillQuote() {
     const gsSocialStyle = "<style>.social-link {height: 32px;margin: 0px 6px;}</style>"
     const hyperlinkStyle = "<style>a{text-decoration: none;color: black;} a:visited{text-decoration: none;color: black;} a:hover{text-decoration: none !important;opacity: 0.7;} </style>"
     const paypalButtonStyle = "<style>.paypal-icon{height:24px;margin-right:4px}.paypal-button{margin-right:24px;border-radius:24px;height:42px;border:1px solid #003084;outline:none;display:flex;align-items:center;padding:2px 16px;color:#003084;font-size:18px;background-color:white;transition:all 0.3s ease-out}.paypal-button:hover{cursor:pointer;border:1px solid #1ba0de}.paypal-button:active{cursor:pointer;border:1px solid #1ba0de;color:white;background-color:#003084}</style>"
+    const opencollButtonStyle = "<style>.opencoll-icon{height:24px;margin-right:4px}.opencoll-button{margin-right:24px;border-radius:24px;height:42px;border:1px solid #003084;outline:none;display:flex;align-items:center;padding:2px 16px;color:#003084;font-size:18px;background-color:#87ADEC;transition:all 0.3s ease-out}.opencoll-button:hover{cursor:pointer;border:1px solid #1ba0de}.opencoll-button:active{cursor:pointer;border:1px solid #1ba0de;color:white;background-color:#799BD4}</style>"
     const sponsorButtonStyle = "<style>.btn-github-sponsors {color: #24292e;background-color: #fafbfc;border-color: rgba(27, 31, 35, 0.15) !important;box-shadow: 0 1px 0 rgba(27, 31, 35, 0.04),inset 0 1px 0 hsla(0, 0%, 100%, 0.25);transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);padding: 5px 16px;font-size: 14px;font-weight: 500;line-height: 20px;white-space: nowrap;;cursor: pointer;user-select: none;border: 1px solid;border-radius: 6px;appearance: none;font-family: BlinkMacSystemFont, Segoe UI, Helvetica, Arial; background-color: #f3f4f6;transition-duration: 0.1s;} .icon-github-sponsors {margin-right: 8px;vertical-align: text-bottom;}</style>"
     const gsDescStyle = "style=\"color:"+ gsTextColour+ "\""
 
     const gsDesc = "This web extension was developed by Grey Software, a not-for-profit open source software development academy where maintainers and students create free software."
     const instruction = "To exit focus mode, click on the LinkedInFocus extension:"
-    const gsDonate = "You can support us as we envision and build the software ecosystem of the future by sponsoring us on GitHub and/or by making a donation via PayPal."
+    const gsDonate = "You can support us as we envision and build the software ecosystem of the future by making a donation via PayPal or OpenCollective and/or by sponsoring us on GitHub."
     const gsThankYou = "Thank you for your generosity and support 🙂"
 
     var focusHTML = "<div style=\"padding: 0px 12px;\">"
@@ -198,9 +200,11 @@ function fillQuote() {
     focusHTML += "<div style=\"margin: 12px 0px;color:"+ gsTextColour+"\">" + gsDonate + "</div>"
     focusHTML += "<div style=\"margin-bottom: 12px;color:"+ gsTextColour+"\">" + gsThankYou + "</div>"
     focusHTML += paypalButtonStyle
+    focusHTML += opencollButtonStyle
     focusHTML += sponsorButtonStyle
     focusHTML += "<div style=\"display:flex;align-items:center\">"
     focusHTML += "<a target=\"_blank\" href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VEAGAZP7DHJNE&source=url\"><button class=\"paypal-button\"><img class=\"paypal-icon\" src=\"" + paypalLogoUrl + "\"/>Donate</button></a>"
+    focusHTML += "<a target=\"_blank\" href=\"https://opencollective.com/grey-software"><button class=\"opencoll-button\"><img class=\"oc-icon\" src=\"" + opencollLogoUrl + "\"/>Donate on Open Collective</button></a>"
     focusHTML += "<a target=\"_blank\" href=\"https://github.com/sponsors/grey-software\" class=\"btn-github-sponsors\"><svg class=\"icon-github-sponsors\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" fill=\"#ea4aaa\" d=\"M4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.565 20.565 0 008 13.393a20.561 20.561 0 003.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.75.75 0 01-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5zM8 14.25l-.345.666-.002-.001-.006-.003-.018-.01a7.643 7.643 0 01-.31-.17 22.075 22.075 0 01-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.08 22.08 0 01-3.744 2.584l-.018.01-.006.003h-.002L8 14.25zm0 0l.345.666a.752.752 0 01-.69 0L8 14.25z\"></path></svg><span>Sponsor</span></a>"
     focusHTML += "</div>"
     focusHTML += "</div>"
