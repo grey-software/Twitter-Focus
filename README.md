@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="" title="Twitter Focus"><img width=100 height=100 src="https://github.com/grey-software/Twitter-Focus/raw/master/src/icon.png" /></a>
+  <img width=100 height=100 src="https://github.com/grey-software/Twitter-Focus/raw/master/src/icon.png" />
 </div>
 
 # Twitter Focus
@@ -18,5 +18,5 @@ Twitter Focus allows you to hide the feed and What's Happening panel on Twitter 
 </div>
 
 <div align="center">
-    <img alt="GreySoftware icon" width="500" src="https://github.com/grey-software/LinkedIn-Focus/raw/master/grey-software-sticker.png">
+    <img alt="Grey Software Sticker" width="500" src="https://github.com/grey-software/LinkedIn-Focus/raw/master/grey-software-sticker.png">
 </div>
